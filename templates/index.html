@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>API de Pedidos e Autenticação</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #1f2937;
+            color: #fff;
+            padding: 30px;
+            text-align: center;
+        }
+
+        section {
+            max-width: 1100px;
+            margin: 30px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
+
+        h1, h2, h3 {
+            color: #1f2937;
+        }
+
+        h2 {
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 8px;
+        }
+
+        code {
+            background-color: #f3f4f6;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+
+        ul {
+            margin-left: 20px;
+        }
+
+        .route {
+            background-color: #f9fafb;
+            border-left: 5px solid #3b82f6;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+        }
+
+        .method {
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #1f2937;
+            color: #fff;
+            margin-top: 40px;
+        }
+
+        .docs-button-container {
+        text-align: center;
+        margin: 40px 0;
+        }
+
+        .docs-button {
+            background-color: #3b82f6;
+            color: #fff;
+            padding: 14px 28px;
+            font-size: 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: inline-block;
+        }
+
+        .docs-button:hover {
+            background-color: #2563eb;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>API de Pedidos e Autenticação</h1>
+    <p>Sistema completo de autenticação, gerenciamento de usuários e pedidos</p>
+</header>
+
+<section>
+    <h2>Sobre o Sistema</h2>
+    <p>
+        Esta API foi desenvolvida para gerenciar usuários, autenticação segura e
+        controle completo de pedidos, incluindo criação, cancelamento, finalização
+        e manipulação de itens.
+    </p>
+
+    <p>
+        O sistema utiliza autenticação baseada em <strong>JWT (JSON Web Token)</strong>,
+        controle de permissões por usuário e administrador, e segue boas práticas
+        de desenvolvimento com <strong>FastAPI</strong> e <strong>SQLAlchemy</strong>.
+    </p>
+</section>
+
+<section>
+    <h2>Autenticação e Segurança</h2>
+    <ul>
+        <li>Autenticação via JWT (Access Token e Refresh Token)</li>
+        <li>Criptografia de senha com bcrypt</li>
+        <li>Controle de acesso por perfil (Usuário comum / Administrador)</li>
+        <li>Proteção de rotas sensíveis com dependências de autenticação</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Rotas de Autenticação</h2>
+
+    <div class="route">
+        <p><span class="method">GET</span> <code>/auth/</code></p>
+        <p>Rota base para verificação do módulo de autenticação.</p>
+    </div>
+
+    <div class="route">
+        <p><span class="method">POST</span> <code>/auth/criar_conta</code></p>
+        <p>Cria uma nova conta de usuário. Apenas administradores podem criar usuários admin.</p>
+    </div>
+
+    <div class="route">
+        <p><span class="method">POST</span> <code>/auth/login</code></p>
+        <p>Realiza login via JSON (email e senha), retornando access e refresh token.</p>
+    </div>
+
+    <div class="route">
+        <p><span class="method">POST</span> <code>/auth/login-form</code></p>
+        <p>Login via OAuth2, utilizado principalmente pela documentação Swagger.</p>
+    </div>
+
+    <div class="route">
+        <p><span class="method">GET</span> <code>/auth/refresh</code></p>
+        <p>Gera um novo access token a partir de um token válido.</p>
+    </div>
+</section>
+
+<section>
+    <h2>Rotas de Pedidos</h2>
+
+    <div class="route">
+        <p><span class="method">POST</span> <code>/pedidos/pedido</code></p>
+        <p>Cria um novo pedido no sistema.</p>
+    </div>
+
+    <div class="route">
+        <p><span class="method">GET</span> <code>/pedidos/listar-pedidos</code></p>
+        <p>Lista todos os pedidos cadastrados. Acesso restrito a administradores.</p>
+    </div>
+
+    <div class="route">
+        <p><span class="method">GET</span> <code>/pedidos/listar-html</code></p>
+        <p>Renderiza uma página HTML com pedidos separados por status.</p>
+    </div>
+
+    <div class="route">
+        <p><span class="method">GET</span> <code>/pedidos/pedido/{id}</code></p>
+        <p>Retorna um pedido específico. Apenas admin ou dono do pedido.</p>
+    </div>
+
+    <div class="route">
+        <p><span class="method">POST</span> <code>/pedidos/pedido/finalizar/{id}</code></p>
+        <p>Finaliza um pedido, alterando seu status para FINALIZADO.</p>
+    </div>
+
+    <div class="route">
+        <p><span class="method">POST</span> <code>/pedidos/pedido/cancelar/{id}</code></p>
+        <p>Cancela um pedido existente.</p>
+    </div>
+</section>
+
+<section>
+    <h2>Itens do Pedido</h2>
+
+    <div class="route">
+        <p><span class="method">POST</span> <code>/pedidos/pedido/adicionar-item/{id}</code></p>
+        <p>Adiciona um item a um pedido e recalcula o valor total.</p>
+    </div>
+
+    <div class="route">
+        <p><span class="method">POST</span> <code>/pedidos/pedido/remover-item/{id}</code></p>
+        <p>Remove um item do pedido e atualiza o preço automaticamente.</p>
+    </div>
+</section>
+
+<section>
+    <h2>Pedidos por Usuário</h2>
+
+    <div class="route">
+        <p><span class="method">GET</span> <code>/pedidos/pedido/listar-pedidos-usuario/{id_usuario}</code></p>
+        <p>Lista todos os pedidos de um usuário específico. Acesso restrito.</p>
+    </div>
+</section>
+
+<section>
+    <h2>Tecnologias Utilizadas</h2>
+    <ul>
+        <li>Python + FastAPI</li>
+        <li>SQLAlchemy</li>
+        <li>JWT (JSON Web Token)</li>
+        <li>OAuth2</li>
+        <li>Pydantic</li>
+        <li>Templates HTML (Jinja2)</li>
+    </ul>
+</section>
+
+<div class="docs-button-container">
+    <a href="/docs" class="docs-button" target="_blank">
+        📘 Ver Documentação da API
+    </a>
+</div>
+
+<footer>
+    <p>
+        API desenvolvida com FastAPI • Autenticação JWT • Controle de Pedidos<br>
+        <span style="font-size: 0.9em; opacity: 0.8;">
+            © 2026 • By Victor Andrey Martins Brunner
+        </span>
+    </p>
+</footer>
+
+</body>
+</html>
