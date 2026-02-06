@@ -27,7 +27,7 @@ O sistema permite:
 
 ---
 
-## 📁 Estrutura do projeto
+## Estrutura do projeto
 
 ```bash
 PizzariaFastAPI2/
@@ -52,7 +52,7 @@ PizzariaFastAPI2/
 
 ---
 
-## 🚀 Rodando o projeto com Docker (recomendado)
+## Rodando o projeto com Docker (recomendado)
 
 ### Pré-requisitos
 
@@ -114,7 +114,7 @@ docker-compose exec api alembic upgrade head
 ```
 ---
 
-## 🛑 Parar a aplicação
+## Parar a aplicação
 
 ```bash
 docker-compose down       # Para os containers
@@ -142,7 +142,7 @@ poetry run uvicorn main:app --reload
 
 ---
 
-## 📌 Observações
+## Observações
 
 - As migrations do Alembic estão incluídas no repositório.
 
