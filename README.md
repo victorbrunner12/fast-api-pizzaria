@@ -88,7 +88,7 @@ docker-compose up --build
 
 ---
 
-## 👤 Usuário padrão
+## Usuário padrão
 
 O usuário admin padrão é criado automaticamente usando as variáveis do .env.
 Exemplo de .env.example:
@@ -101,7 +101,7 @@ ADMIN_PASSWORD=123456
 
 ---
 
-## 🗄 Banco de dados e migrations
+## Banco de dados e migrations
 
 O projeto utiliza Alembic para versionamento do banco.
 
@@ -123,7 +123,7 @@ docker-compose down -v    # Para e remove volumes (incluindo banco de dados)
 
 ---
 
-## 💻 Rodar sem Docker (opcional)
+## Rodar sem Docker (opcional)
 
 ### Pré-requisitos
 
